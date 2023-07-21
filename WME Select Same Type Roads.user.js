@@ -14,7 +14,7 @@
 // @match https://descarte*.waze.com/beta*
 // @match https://editor-beta.waze.com*
 // @grant       unsafeWindow
-// @version         4.12.0
+// @version         4.12.1
 // @license       CC-BY-NC-SA
 // @require         https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // ==/UserScript==
@@ -32,7 +32,7 @@
 // 3) Click the "Select Roads A<=>B" button
 // The script will select all same type road between A and B with a limit of 50 segments
 
-var WME_SSTR_version = "4.12.0" ;
+var WME_SSTR_version = "4.12.1" ;
 
 
 // *************
