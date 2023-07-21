@@ -143,7 +143,7 @@ async function onWazeWrapReady() {
     function create_WME_SSTR_ALL () {
         var chk1 = $('<Label style="font-weight:normal"><input type="checkbox"; style="vertical-align: middle;margin:0px;" id="WME_SSTR_enable"	title="Enable or Disable WME SSTR">On-Off    </input></Label>');
         var chk2 = $('<Label style="font-weight:normal;margin:0px 5px 0px 0px"><input type="checkbox"; style="vertical-align: middle;margin:0px;" id="WME_SSTR_SmthRvr" title="Check for smoothing">Smooth</input></Label>');
-        var url1 = $('<div style="font-size:12px;display: inline;"> <u><i><a href="https://greasyfork.org/scripts/4715-wme-select-same-type-roads" target="_blank">Select Same Type Road ' + WME_SSTR_version+ '</a></i></u>');
+        var url1 = $('<div style="font-size:12px;display: inline;"> <u><i><a href="https://greasyfork.org/en/scripts/471397-wme-select-same-type-roads-g1220k-version" target="_blank">Select Same Type Road ' + WME_SSTR_version+ '</a></i></u>');
 
         var btn1 = $('<button class="waze-btn waze-btn-small waze-btn-white" style="padding:0px 6px; height:20px;" title="Select 1 or more segments and click this button">Select Same Type Roads</button>');
         var btn2 = $('<button class="waze-btn waze-btn-small waze-btn-white" style="padding:0px 6px; height:20px; margin-right:5px;" title="Select adjacent segment from node A">A =></button>');
