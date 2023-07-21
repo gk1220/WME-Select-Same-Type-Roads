@@ -15,6 +15,7 @@
 // @match https://editor-beta.waze.com*
 // @grant       unsafeWindow
 // @version         4.12.0
+// @license       CC-BY-NC-SA
 // @require         https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // ==/UserScript==
 
