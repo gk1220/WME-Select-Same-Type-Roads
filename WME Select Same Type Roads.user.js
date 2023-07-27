@@ -14,7 +14,7 @@
 // @match https://descarte*.waze.com/beta*
 // @match https://editor-beta.waze.com*
 // @grant       unsafeWindow
-// @version         4.12.1
+// @version         4.12.2
 // @license       CC-BY-NC-SA
 // @require         https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // ==/UserScript==
@@ -32,7 +32,7 @@
 // 3) Click the "Select Roads A<=>B" button
 // The script will select all same type road between A and B with a limit of 50 segments
 
-var WME_SSTR_version = "4.12.1" ;
+var WME_SSTR_version = "4.12.2" ;
 
 
 // *************
@@ -159,11 +159,11 @@ async function onWazeWrapReady() {
         btn2.click	(Side_A);
         btn3.click	(Side_B);
         btn4.click	(select_AB);
-        //        btn7.click	(Street_River);
-        //        btn8.click	(Roads_to_Interchange);
-        //        btn10.click (Redo_RoundAbout);
-        //        btn12.click (Clear_Road_Geometry);
-        //        btn13.click (All_drives_on_Selection);
+        btn7.click	(Street_River);
+        btn8.click	(Roads_to_Interchange);
+        btn10.click (Redo_RoundAbout);
+        btn12.click (Clear_Road_Geometry);
+        btn13.click (All_drives_on_Selection);
         chk1.click	(manage_WME_SSTR);
         chk2.click	(manageSmoothRiver);
 
@@ -190,7 +190,7 @@ async function onWazeWrapReady() {
 
         return WME_SSTR_ALL;
     }
-    /*
+
     function Clear_Road_Geometry(ev) {
         var selectedItems = W.selectionManager.getSelectedFeatures();
         console.log("selectedItems")
@@ -198,7 +198,7 @@ async function onWazeWrapReady() {
             console.log("größer 0")
             if (confirm ("Do you want to clear the geometry for selected segments") ) {
                 for (var i = 0; i < selectedItems.length; i++) {
-                    var seg = selectedItems[i].model;
+                    var seg = selectedItems[i].attributes.wazeFeature._wmeObject;
                     if (seg.type == "segment") {
                         var newGeo = seg.geometry.clone();
                         newGeo.components.splice(1,newGeo.components.length -2);														// on garde le 1er et le dernier point
@@ -218,7 +218,7 @@ async function onWazeWrapReady() {
             var nodeToAllowed = [];
             var selectRoadIDs = [];
             for (var i = 0; i < selectedItems.length; i++) {
-                var seg = selectedItems[i].model;
+                var seg = selectedItems[i].attributes.wazeFeature._wmeObject;
                 if (seg != null && seg.type == "segment" && !seg.attributes.locked && seg.attributes.junctionID == null) {
                     selectRoadIDs.push (seg.getID());
                     action.push (new WazeActionUpdateObject( seg, {fwdDirection: true, revDirection: true}));		// pass to two ways
@@ -267,15 +267,15 @@ async function onWazeWrapReady() {
         var selectedGood = (selectedItems.length!=0);
         if (selectedGood) {
             var listRoadIds = [];
-            if (selectedItems[0].model.attributes.junctionID !=null) {			// si c'est un rdt , on selectionne tout le rdt
-                var sel = selectedItems[0].model;
+            if (selectedItems[0].attributes.wazeFeature._wmeObject.attributes.junctionID !=null) {			// si c'est un rdt , on selectionne tout le rdt
+                var sel = selectedItems[0].attributes.wazeFeature._wmeObject;
                 var junc = W.model.junctions.objects[sel.attributes.junctionID];
                 listRoadIds = junc.attributes.segIDs;
 
             }
             else {
                 for (var ii = 0; ii < selectedItems.length; ii++) {								// sinon on prend tous les egments selectionnés
-                    var sel1 = selectedItems[ii].model;
+                    var sel1 = selectedItems[ii].attributes.wazeFeature._wmeObject;
                     listRoadIds.push (sel1.getID());
                 }
             }
@@ -534,7 +534,7 @@ async function onWazeWrapReady() {
         var selectedGood = (selectedItems.length>0);
         var roadIds = [];
         for (var i = 0; i<selectedItems.length;i++) { 					// Test if selection are segment
-            var sel1 = selectedItems[i].model;
+            var sel1 = selectedItems[i].attributes.wazeFeature._wmeObject;
             selectedGood = ((selectedGood) && (sel1.type == "segment"));
             if ((selectedGood)&& (sel1.attributes.junctionID!=null)) {						// if it is a roundabout we add all Rdt segs
                 var jId = sel1.attributes.junctionID;
@@ -662,7 +662,7 @@ async function onWazeWrapReady() {
     function Street_River (ev) {
         var selectedItems = W.selectionManager.getSelectedFeatures();
         var selectedGood = (selectedItems.length==1);
-        var sel = selectedItems[0].model;
+        var sel = selectedItems[0].attributes.wazeFeature._wmeObject;
         selectedGood = selectedGood && (sel.type == "segment") && (sel.attributes.roadType != "18");
         if (selectedGood) {
             var offset = getDisplacement();																	// valeur en mètres
@@ -829,7 +829,7 @@ async function onWazeWrapReady() {
         var street = segment.model.streets.get(segment.attributes.primaryStreetID);
         return street;
     }
-*/
+
     function select_same_type_roads(ev) {
         var selectedItems = W.selectionManager.getSelectedFeatures();
         var nbRoad = selectedItems.length;
@@ -1320,7 +1320,7 @@ async function onWazeWrapReady() {
                     if (road[0].attributes.junctionID !=null) {
                         document.getElementById ('WME_SSTR_Rdt').style.display = "block";
                     }
-                    if (W.loginManager.user.normalizedLevel >= 3) {
+                    if (W.loginManager.user.rank >= 6) {
                         document.getElementById ('WME_SSTR_CrgAds').style.display = "block";}
                 }
                 if (road.length == 2) {
